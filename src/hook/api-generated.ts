@@ -1278,6 +1278,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       query?: {
         recordId?: any;
         tabel?: any;
+        aksi?: any;
+        query?: any;
+        limit?: any;
+        page?: any;
       },
       params: RequestParams = {},
     ) =>

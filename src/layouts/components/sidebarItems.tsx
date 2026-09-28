@@ -91,6 +91,7 @@ const verifikatorSections: SidebarSection[] = [
 const pimpinanSections: SidebarSection[] = [
   { key: "overview", title: "Overview", abbreviation: "OV", items: overviewItems },
   { key: "pengadaan", title: "Pengadaan", abbreviation: "PG", items: [pengadaanItems[1]] },
+  { key: "system", title: "Sistem & Audit", abbreviation: "SY", items: [systemItems[1]] },
 ];
 
 const defaultSections: SidebarSection[] = [
