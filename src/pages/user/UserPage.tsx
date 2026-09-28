@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from "react";
-import { Box, Typography, TextField, MenuItem, Grid, Card, Chip } from "@mui/material";
-import { AddOutlined, EditOutlined, DeleteOutlined, VisibilityOutlined, PeopleOutlined } from "@mui/icons-material";
+import { Box, Typography, TextField, MenuItem, Chip } from "@mui/material";
+import { AddOutlined, EditOutlined, DeleteOutlined, VisibilityOutlined } from "@mui/icons-material";
 
 import { DashboardLayout } from "../../layouts";
 import { ServerDataTable, Modal, ConfirmDialog, StatusChip, SoftButton, ActionButton, ActionButtonGroup, ActionMenuButton } from "../../components";
@@ -26,20 +26,6 @@ interface User {
   role?: Role;
   createdAt?: string;
   [key: string]: any;
-}
-
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
-function StatCard({ label, value, icon, color }: { label: string; value: string | number; icon: React.ReactNode; color: string }) {
-  return (
-    <Card sx={{ p: 2.5, borderRadius: "var(--radius-lg)", border: "1px solid var(--border)", backgroundColor: "var(--card)", display: "flex", alignItems: "center", gap: 2 }}>
-      <Box sx={{ width: 48, height: 48, borderRadius: "var(--radius)", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: `color-mix(in srgb, ${color} 12%, transparent)`, color, flexShrink: 0 }}>{icon}</Box>
-      <Box>
-        <Typography sx={{ fontSize: "1.6rem", fontWeight: 700, color: "var(--foreground)", lineHeight: 1.1 }}>{value}</Typography>
-        <Typography sx={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--foreground)", mt: 0.25 }}>{label}</Typography>
-      </Box>
-    </Card>
-  );
 }
 
 const STATUS_OPTIONS = [
@@ -287,20 +273,18 @@ export function UserPage() {
   ];
 
   return (
-    <DashboardLayout sectionTitle="Sistem" title="Pengguna">
-      <Box sx={{ py: 2.5, px: { xs: 2, sm: 3 } }}>
-        <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <StatCard label="Total Pengguna" value={totalRows} icon={<PeopleOutlined />} color="#059669" />
-          </Grid>
-        </Grid>
-
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
-          <SoftButton startIcon={<AddOutlined />} onClick={openCreateModal}>
-            Tambah User
-          </SoftButton>
-        </Box>
-
+    <DashboardLayout
+      sectionTitle="Sistem"
+      title="Pengguna"
+      headerTitle="Manajemen Pengguna"
+      headerDescription="Kelola akun pengguna sistem dan hak akses peran"
+      headerAction={
+        <SoftButton startIcon={<AddOutlined />} onClick={openCreateModal}>
+          Tambah User
+        </SoftButton>
+      }
+    >
+      <Box sx={{ p: { xs: 2, sm: 3 } }}>
         <ServerDataTable
           columns={columns}
           data={data}

@@ -169,100 +169,80 @@ export function DashboardLayout({ children, title, sectionTitle, totalCount, hea
                   },
                 }}
               >
-                <Box
-                  sx={{
-                    flex: 1,
-                    overflow: "auto",
-                    overscrollBehavior: "contain",
-                    scrollbarWidth: "thin",
-                    scrollbarColor: "var(--border) transparent",
-                    scrollbarGutter: "stable",
-                    "&::-webkit-scrollbar": {
-                      width: "10px",
-                      height: "10px",
-                    },
-                    "&::-webkit-scrollbar-track": {
-                      backgroundColor: "transparent",
-                    },
-                    "&::-webkit-scrollbar-thumb": {
-                      backgroundColor: "var(--border)",
-                      borderRadius: "999px",
-                      border: "3px solid transparent",
-                      backgroundClip: "content-box",
-                      minHeight: "48px",
-                    },
-                  }}
-                >
-                  {(headerTitle || headerDescription || headerAction) && (
-                    <Box sx={{ px: { xs: 2, sm: 3 }, py: { xs: 1.5, sm: 2.5 } }}>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: { xs: "column", sm: "row" },
-                          alignItems: { xs: "flex-start", sm: "center" },
-                          justifyContent: "space-between",
-                          gap: { xs: 1.25, sm: 1.5 },
-                        }}
-                      >
-                        {/* Title + description */}
-                        <Box sx={{ minWidth: 0 }}>
-                          {headerTitle && (
-                            <Typography
-                              variant="subtitle1"
-                              sx={{
-                                fontWeight: 700,
-                                color: "var(--foreground)",
-                                fontSize: { xs: "0.95rem", sm: "1rem" },
-                                lineHeight: 1.3,
-                              }}
-                            >
-                              {headerTitle}
-                            </Typography>
-                          )}
-                          {headerDescription && (
-                            <Typography
-                              variant="body2"
-                              sx={{
-                                color: "var(--muted-foreground)",
-                                fontSize: { xs: "0.72rem", sm: "0.875rem" },
-                                mt: 0.25,
-                              }}
-                            >
-                              {headerDescription}
-                            </Typography>
-                          )}
-                        </Box>
-
-                        {/* Action buttons — wrap, left-aligned on mobile */}
-                        {headerAction && (
-                          <Box
+                {(headerTitle || headerDescription || headerAction) && (
+                  <Box
+                    sx={{
+                      px: { xs: 2, sm: 3 },
+                      py: { xs: 1.5, sm: 2 },
+                      borderBottom: "1px solid var(--border)",
+                      backgroundColor: "var(--card)",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: { xs: "column", sm: "row" },
+                        alignItems: { xs: "flex-start", sm: "center" },
+                        justifyContent: "space-between",
+                        gap: { xs: 1.25, sm: 1.5 },
+                      }}
+                    >
+                      {/* Title + description */}
+                      <Box sx={{ minWidth: 0 }}>
+                        {headerTitle && (
+                          <Typography
+                            variant="subtitle1"
                             sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: { xs: 0.75, sm: 1 },
-                              flexWrap: "wrap",
-                              width: { xs: "100%", sm: "auto" },
-                              justifyContent: { xs: "flex-start", sm: "flex-end" },
-                              flexShrink: 0,
-                              "& .MuiButton-root": {
-                                fontSize: { xs: "0.75rem", sm: undefined },
-                                px: { xs: 1.5, sm: undefined },
-                                py: { xs: 0.65, sm: undefined },
-                                "& .MuiButton-startIcon svg": {
-                                  fontSize: { xs: "1rem !important", sm: undefined },
-                                },
-                              },
+                              fontWeight: 700,
+                              color: "var(--foreground)",
+                              fontSize: { xs: "0.95rem", sm: "1.05rem" },
+                              lineHeight: 1.3,
                             }}
                           >
-                            {headerAction}
-                          </Box>
+                            {headerTitle}
+                          </Typography>
+                        )}
+                        {headerDescription && (
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              color: "var(--muted-foreground)",
+                              fontSize: { xs: "0.75rem", sm: "0.85rem" },
+                              mt: 0.25,
+                            }}
+                          >
+                            {headerDescription}
+                          </Typography>
                         )}
                       </Box>
-                    </Box>
-                  )}
 
-                  {/* {children} */}
-                </Box>
+                      {/* Action buttons — wrap, left-aligned on mobile */}
+                      {headerAction && (
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: { xs: 0.75, sm: 1 },
+                            flexWrap: "wrap",
+                            width: { xs: "100%", sm: "auto" },
+                            justifyContent: { xs: "flex-start", sm: "flex-end" },
+                            flexShrink: 0,
+                            "& .MuiButton-root": {
+                              fontSize: { xs: "0.75rem", sm: undefined },
+                              px: { xs: 1.5, sm: undefined },
+                              py: { xs: 0.65, sm: undefined },
+                              "& .MuiButton-startIcon svg": {
+                                fontSize: { xs: "1rem !important", sm: undefined },
+                              },
+                            },
+                          }}
+                        >
+                          {headerAction}
+                        </Box>
+                      )}
+                    </Box>
+                  </Box>
+                )}
                 {children}
               </Box>
             </Box>

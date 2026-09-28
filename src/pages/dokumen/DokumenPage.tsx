@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import { Box, Typography, TextField, Grid, Card, Button } from "@mui/material";
+import { Box, Typography, TextField, Button, Card } from "@mui/material";
 import { DeleteOutlined, VisibilityOutlined, UploadFileOutlined, FolderOpenOutlined } from "@mui/icons-material";
 
 import { DashboardLayout } from "../../layouts";
@@ -26,18 +26,6 @@ interface Dokumen {
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
-
-function StatCard({ label, value, icon, color }: { label: string; value: string | number; icon: React.ReactNode; color: string }) {
-  return (
-    <Card sx={{ p: 2.5, borderRadius: "var(--radius-lg)", border: "1px solid var(--border)", backgroundColor: "var(--card)", display: "flex", alignItems: "center", gap: 2 }}>
-      <Box sx={{ width: 48, height: 48, borderRadius: "var(--radius)", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: `color-mix(in srgb, ${color} 12%, transparent)`, color, flexShrink: 0 }}>{icon}</Box>
-      <Box>
-        <Typography sx={{ fontSize: "1.6rem", fontWeight: 700, color: "var(--foreground)", lineHeight: 1.1 }}>{value}</Typography>
-        <Typography sx={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--foreground)", mt: 0.25 }}>{label}</Typography>
-      </Box>
-    </Card>
-  );
-}
 
 function formatDate(dateStr?: string) {
   if (!dateStr) return "-";
@@ -171,20 +159,18 @@ export function DokumenPage() {
   ];
 
   return (
-    <DashboardLayout sectionTitle="Pengadaan" title="Dokumen">
-      <Box sx={{ py: 2.5, px: { xs: 2, sm: 3 } }}>
-        <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <StatCard label="Total Dokumen" value={totalRows} icon={<FolderOpenOutlined />} color="#b45309" />
-          </Grid>
-        </Grid>
-
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
-          <SoftButton startIcon={<UploadFileOutlined />} onClick={() => setUploadModalOpen(true)}>
-            Upload Dokumen
-          </SoftButton>
-        </Box>
-
+    <DashboardLayout
+      sectionTitle="Pengadaan"
+      title="Dokumen"
+      headerTitle="Dokumen Pengadaan"
+      headerDescription="Daftar berkas dan dokumen pendukung pengadaan minyak"
+      headerAction={
+        <SoftButton startIcon={<UploadFileOutlined />} onClick={() => setUploadModalOpen(true)}>
+          Upload Dokumen
+        </SoftButton>
+      }
+    >
+      <Box sx={{ p: { xs: 2, sm: 3 } }}>
         <ServerDataTable
           columns={columns}
           data={data}
@@ -224,7 +210,7 @@ export function DokumenPage() {
         }}
         onClick={() => setUploadModalOpen(false)}
       >
-        <Card sx={{ p: 3, width: 480, maxWidth: "90vw" }} onClick={(e) => e.stopPropagation()}>
+        <Card sx={{ p: 3, width: 480, maxWidth: "90vw" }} onClick={(e: React.MouseEvent) => e.stopPropagation()}>
           <Typography variant="h6" sx={{ mb: 2, fontWeight: 700 }}>
             Upload Dokumen
           </Typography>

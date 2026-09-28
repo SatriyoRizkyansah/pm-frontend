@@ -160,8 +160,13 @@ export function DashboardPage() {
   ];
 
   return (
-    <DashboardLayout sectionTitle="Overview" title="Dashboard">
-      <Box sx={{ py: 2.5, px: { xs: 2, sm: 3 } }}>
+    <DashboardLayout
+      sectionTitle="Overview"
+      title="Dashboard"
+      headerTitle="Dashboard Overview"
+      headerDescription="Ringkasan statistik dan aktivitas terkini pengadaan minyak LEMIGAS"
+    >
+      <Box sx={{ p: { xs: 2, sm: 3 } }}>
         {/* ── Stats ─────────────────────────────────────────────────────── */}
         <Grid container spacing={2} sx={{ mb: 4 }}>
           <Grid size={{ xs: 6, md: 3 }}>

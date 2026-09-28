@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from "react";
-import { Box, Typography, TextField, Grid, Card, Chip } from "@mui/material";
-import { AddOutlined, EditOutlined, DeleteOutlined, VisibilityOutlined, CategoryOutlined } from "@mui/icons-material";
+import { Box, Typography, TextField, Chip } from "@mui/material";
+import { AddOutlined, EditOutlined, DeleteOutlined, VisibilityOutlined } from "@mui/icons-material";
 
 import { DashboardLayout } from "../../layouts";
 import { ServerDataTable, Modal, ConfirmDialog, SoftButton, ActionButton, ActionButtonGroup, ActionMenuButton } from "../../components";
@@ -19,20 +19,6 @@ interface Kategori {
   _count?: { barang?: number };
   createdAt?: string;
   [key: string]: any;
-}
-
-// ─── Stat Card ───────────────────────────────────────────────────────────────
-
-function StatCard({ label, value, icon, color }: { label: string; value: string | number; icon: React.ReactNode; color: string }) {
-  return (
-    <Card sx={{ p: 2.5, borderRadius: "var(--radius-lg)", border: "1px solid var(--border)", backgroundColor: "var(--card)", display: "flex", alignItems: "center", gap: 2 }}>
-      <Box sx={{ width: 48, height: 48, borderRadius: "var(--radius)", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: `color-mix(in srgb, ${color} 12%, transparent)`, color, flexShrink: 0 }}>{icon}</Box>
-      <Box>
-        <Typography sx={{ fontSize: "1.6rem", fontWeight: 700, color: "var(--foreground)", lineHeight: 1.1 }}>{value}</Typography>
-        <Typography sx={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--foreground)", mt: 0.25 }}>{label}</Typography>
-      </Box>
-    </Card>
-  );
 }
 
 // ─── Page ────────────────────────────────────────────────────────────────────
@@ -229,20 +215,18 @@ export function KategoriPage() {
   ];
 
   return (
-    <DashboardLayout sectionTitle="Master Data" title="Kategori Pengadaan">
-      <Box sx={{ py: 2.5, px: { xs: 2, sm: 3 } }}>
-        <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <StatCard label="Total Kategori" value={totalRows} icon={<CategoryOutlined />} color="#7c3aed" />
-          </Grid>
-        </Grid>
-
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
-          <SoftButton startIcon={<AddOutlined />} onClick={openCreateModal}>
-            Tambah Kategori
-          </SoftButton>
-        </Box>
-
+    <DashboardLayout
+      sectionTitle="Master Data"
+      title="Kategori Pengadaan"
+      headerTitle="Kategori Pengadaan"
+      headerDescription="Kelola data kategori barang dan pengadaan minyak LEMIGAS"
+      headerAction={
+        <SoftButton startIcon={<AddOutlined />} onClick={openCreateModal}>
+          Tambah Kategori
+        </SoftButton>
+      }
+    >
+      <Box sx={{ p: { xs: 2, sm: 3 } }}>
         <ServerDataTable
           columns={columns}
           data={data}

@@ -1,28 +1,5 @@
 import React, { useState, useMemo, useCallback } from "react";
-import {
-  Box,
-  Typography,
-  Chip,
-  Card,
-  Grid,
-  TextField,
-  InputAdornment,
-  IconButton,
-  Button,
-  ToggleButtonGroup,
-  ToggleButton,
-  Tooltip,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  Paper,
-  Tabs,
-  Tab,
-  Collapse,
-  Alert,
-} from "@mui/material";
+import { Box, Typography, Chip, Card, Grid, TextField, InputAdornment, IconButton, Button, ToggleButtonGroup, ToggleButton, Tooltip, Table, TableHead, TableBody, TableRow, TableCell, Paper, Tabs, Tab, Collapse, Alert } from "@mui/material";
 import {
   HistoryOutlined,
   Timeline,
@@ -88,10 +65,7 @@ interface DiffItem {
 
 // ─── Config & Formatters ─────────────────────────────────────────────────────
 
-const MODULE_CONFIG: Record<
-  string,
-  { label: string; icon: React.ReactNode; color: string; bg: string }
-> = {
+const MODULE_CONFIG: Record<string, { label: string; icon: React.ReactNode; color: string; bg: string }> = {
   pengadaan: {
     label: "Pengadaan",
     icon: <AssignmentOutlined fontSize="small" />,
@@ -154,10 +128,7 @@ const MODULE_CONFIG: Record<
   },
 };
 
-const ACTION_CONFIG: Record<
-  string,
-  { label: string; title: string; color: string; bg: string; icon: React.ReactNode }
-> = {
+const ACTION_CONFIG: Record<string, { label: string; title: string; color: string; bg: string; icon: React.ReactNode }> = {
   create: {
     label: "CREATE",
     title: "Data Dibuat",
@@ -266,91 +237,11 @@ function formatJsonValue(val: any): string {
 
 // ─── Stat Card Component ─────────────────────────────────────────────────────
 
-function StatCard({
-  label,
-  value,
-  icon,
-  color,
-  active,
-  onClick,
-}: {
-  label: string;
-  value: string | number;
-  icon: React.ReactNode;
-  color: string;
-  active?: boolean;
-  onClick?: () => void;
-}) {
-  return (
-    <Card
-      onClick={onClick}
-      sx={{
-        p: 2,
-        borderRadius: "var(--radius-lg)",
-        border: active ? `2px solid ${color}` : "1px solid var(--border)",
-        backgroundColor: "var(--card)",
-        display: "flex",
-        alignItems: "center",
-        gap: 2,
-        cursor: onClick ? "pointer" : "default",
-        transition: "all 0.2s ease",
-        transform: active ? "translateY(-2px)" : "none",
-        boxShadow: active ? `0 6px 18px color-mix(in srgb, ${color} 20%, transparent)` : "none",
-        "&:hover": onClick
-          ? {
-              transform: "translateY(-2px)",
-              borderColor: color,
-              boxShadow: `0 4px 12px color-mix(in srgb, ${color} 15%, transparent)`,
-            }
-          : undefined,
-      }}
-    >
-      <Box
-        sx={{
-          width: 44,
-          height: 44,
-          borderRadius: "var(--radius)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: `color-mix(in srgb, ${color} 14%, transparent)`,
-          color,
-          flexShrink: 0,
-        }}
-      >
-        {icon}
-      </Box>
-      <Box sx={{ minWidth: 0, flex: 1 }}>
-        <Typography sx={{ fontSize: "1.45rem", fontWeight: 700, color: "var(--foreground)", lineHeight: 1.1 }}>
-          {value}
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: "0.78rem",
-            fontWeight: 600,
-            color: active ? color : "var(--muted-foreground)",
-            mt: 0.35,
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-          }}
-        >
-          {label}
-        </Typography>
-      </Box>
-    </Card>
-  );
-}
+// StatCard component removed – it was unused.
 
 // ─── Status Transition Badge ─────────────────────────────────────────────────
 
-function StatusTransitionFlow({
-  before,
-  after,
-}: {
-  before?: string | null;
-  after?: string | null;
-}) {
+function StatusTransitionFlow({ before, after }: { before?: string | null; after?: string | null }) {
   if (!before && !after) return null;
 
   const bConfig = before ? STATUS_LABELS[before.toLowerCase()] || { label: before, color: "#6b7280", bg: "rgba(107, 114, 128, 0.15)" } : null;
@@ -369,9 +260,7 @@ function StatusTransitionFlow({
         border: "1px solid var(--border)",
       }}
     >
-      <Typography sx={{ fontSize: "0.72rem", fontWeight: 600, color: "var(--muted-foreground)" }}>
-        Alur Status:
-      </Typography>
+      <Typography sx={{ fontSize: "0.72rem", fontWeight: 600, color: "var(--muted-foreground)" }}>Alur Status:</Typography>
 
       {bConfig ? (
         <Chip
@@ -387,11 +276,7 @@ function StatusTransitionFlow({
           }}
         />
       ) : (
-        <Chip
-          size="small"
-          label="Awal (Baru)"
-          sx={{ fontSize: "0.7rem", color: "var(--muted-foreground)", height: 22 }}
-        />
+        <Chip size="small" label="Awal (Baru)" sx={{ fontSize: "0.7rem", color: "var(--muted-foreground)", height: 22 }} />
       )}
 
       <ArrowForwardRounded sx={{ fontSize: 16, color: "var(--muted-foreground)" }} />
@@ -410,11 +295,7 @@ function StatusTransitionFlow({
           }}
         />
       ) : (
-        <Chip
-          size="small"
-          label="—"
-          sx={{ fontSize: "0.7rem", color: "var(--muted-foreground)", height: 22 }}
-        />
+        <Chip size="small" label="—" sx={{ fontSize: "0.7rem", color: "var(--muted-foreground)", height: 22 }} />
       )}
     </Box>
   );
@@ -454,34 +335,10 @@ export function AuditLogPage() {
     api_query: [queryParams],
   });
 
-  const { items: rawData, pagination } = useMemo(
-    () => extract_payload_with_pagination<AuditLog>(response),
-    [response],
-  );
+  const { items: rawData, pagination } = useMemo(() => extract_payload_with_pagination<AuditLog>(response), [response]);
 
   const data: AuditLog[] = Array.isArray(rawData) ? rawData : [];
   const totalRows = Number(pagination?.total_datas ?? data.length) || 0;
-
-  // ── Stat Calculations ─────────────────────────────────────────────────────
-  const stats = useMemo(() => {
-    let creates = 0;
-    let updates = 0;
-    let deletes = 0;
-
-    data.forEach((item) => {
-      const a = (item.aksi || "").toLowerCase();
-      if (a === "create" || a === "insert") creates++;
-      else if (a === "update") updates++;
-      else if (a === "delete") deletes++;
-    });
-
-    return {
-      total: totalRows,
-      creates,
-      updates,
-      deletes,
-    };
-  }, [data, totalRows]);
 
   // ── Copy Helper ────────────────────────────────────────────────────────────
   const handleCopyRecordId = useCallback((id: string, e?: React.MouseEvent) => {
@@ -560,17 +417,9 @@ export function AuditLogPage() {
               }}
             >
               <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                <UserAvatar
-                  name={actor?.nama || "Sistem"}
-                  id={actor?.id}
-                  size="medium"
-                  showName={false}
-                  showId={false}
-                />
+                <UserAvatar name={actor?.nama || "Sistem"} id={actor?.id} size="medium" showName={false} showId={false} />
                 <Box>
-                  <Typography sx={{ fontWeight: 700, fontSize: "0.92rem", color: "var(--foreground)" }}>
-                    {actor?.nama || "Sistem Otomatis"}
-                  </Typography>
+                  <Typography sx={{ fontWeight: 700, fontSize: "0.92rem", color: "var(--foreground)" }}>{actor?.nama || "Sistem Otomatis"}</Typography>
                   <Typography sx={{ fontSize: "0.78rem", color: "var(--muted-foreground)" }}>
                     {actor?.email || "internal@lemigas.esdm.go.id"}
                     {actor?.unitKerja ? ` • ${actor.unitKerja}` : ""}
@@ -620,21 +469,13 @@ export function AuditLogPage() {
                   }}
                 >
                   <Box>
-                    <Typography sx={{ fontSize: "0.7rem", color: "var(--muted-foreground)", fontWeight: 600 }}>
-                      RECORD ID
-                    </Typography>
-                    <Typography sx={{ fontSize: "0.82rem", fontFamily: "var(--font-mono)", fontWeight: 600 }}>
-                      {selectedLog.recordId || "—"}
-                    </Typography>
+                    <Typography sx={{ fontSize: "0.7rem", color: "var(--muted-foreground)", fontWeight: 600 }}>RECORD ID</Typography>
+                    <Typography sx={{ fontSize: "0.82rem", fontFamily: "var(--font-mono)", fontWeight: 600 }}>{selectedLog.recordId || "—"}</Typography>
                   </Box>
                   {selectedLog.recordId && (
                     <Tooltip title={copiedRecordId === selectedLog.recordId ? "Tersalin!" : "Salin Record ID"}>
                       <IconButton size="small" onClick={(e) => handleCopyRecordId(selectedLog.recordId, e)}>
-                        {copiedRecordId === selectedLog.recordId ? (
-                          <CheckOutlined fontSize="small" sx={{ color: "#16a34a" }} />
-                        ) : (
-                          <ContentCopyOutlined fontSize="small" />
-                        )}
+                        {copiedRecordId === selectedLog.recordId ? <CheckOutlined fontSize="small" sx={{ color: "#16a34a" }} /> : <ContentCopyOutlined fontSize="small" />}
                       </IconButton>
                     </Tooltip>
                   )}
@@ -643,12 +484,8 @@ export function AuditLogPage() {
 
               <Grid size={{ xs: 12, sm: 6 }}>
                 <Paper variant="outlined" sx={{ p: 1.5, borderRadius: "var(--radius)" }}>
-                  <Typography sx={{ fontSize: "0.7rem", color: "var(--muted-foreground)", fontWeight: 600 }}>
-                    WAKTU EKSEKUSI
-                  </Typography>
-                  <Typography sx={{ fontSize: "0.82rem", fontWeight: 600 }}>
-                    {formatFullDate(selectedLog.createdAt)}
-                  </Typography>
+                  <Typography sx={{ fontSize: "0.7rem", color: "var(--muted-foreground)", fontWeight: 600 }}>WAKTU EKSEKUSI</Typography>
+                  <Typography sx={{ fontSize: "0.82rem", fontWeight: 600 }}>{formatFullDate(selectedLog.createdAt)}</Typography>
                 </Paper>
               </Grid>
             </Grid>
@@ -669,17 +506,10 @@ export function AuditLogPage() {
                 }}
               >
                 <Box>
-                  <Typography sx={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--foreground)" }}>
-                    Alur Transisi Status Entitas
-                  </Typography>
-                  <Typography sx={{ fontSize: "0.72rem", color: "var(--muted-foreground)" }}>
-                    Perubahan status siklus kerja pengadaan pada aksi ini
-                  </Typography>
+                  <Typography sx={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--foreground)" }}>Alur Transisi Status Entitas</Typography>
+                  <Typography sx={{ fontSize: "0.72rem", color: "var(--muted-foreground)" }}>Perubahan status siklus kerja pengadaan pada aksi ini</Typography>
                 </Box>
-                <StatusTransitionFlow
-                  before={statusTransition.before}
-                  after={statusTransition.after}
-                />
+                <StatusTransitionFlow before={statusTransition.before} after={statusTransition.after} />
               </Box>
             )}
           </Box>
@@ -718,15 +548,9 @@ export function AuditLogPage() {
                   <Table size="small">
                     <TableHead sx={{ backgroundColor: "var(--secondary)" }}>
                       <TableRow>
-                        <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "25%" }}>
-                          Atribut / Kolom
-                        </TableCell>
-                        <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "35%" }}>
-                          Data Sebelum
-                        </TableCell>
-                        <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "40%" }}>
-                          Data Sesudah
-                        </TableCell>
+                        <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "25%" }}>Atribut / Kolom</TableCell>
+                        <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "35%" }}>Data Sebelum</TableCell>
+                        <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "40%" }}>Data Sesudah</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -739,13 +563,7 @@ export function AuditLogPage() {
                           <TableRow
                             key={diff.key}
                             sx={{
-                              backgroundColor: isMod
-                                ? "rgba(245, 158, 11, 0.05)"
-                                : isAdd
-                                ? "rgba(22, 163, 74, 0.05)"
-                                : isRem
-                                ? "rgba(220, 38, 38, 0.05)"
-                                : undefined,
+                              backgroundColor: isMod ? "rgba(245, 158, 11, 0.05)" : isAdd ? "rgba(22, 163, 74, 0.05)" : isRem ? "rgba(220, 38, 38, 0.05)" : undefined,
                             }}
                           >
                             <TableCell sx={{ fontSize: "0.78rem", fontWeight: 600, fontFamily: "var(--font-mono)" }}>
@@ -808,9 +626,7 @@ export function AuditLogPage() {
             ) : (
               <Grid container spacing={2}>
                 <Grid size={{ xs: 12, md: 6 }}>
-                  <Typography sx={{ fontSize: "0.75rem", fontWeight: 700, mb: 0.75, color: "var(--muted-foreground)" }}>
-                    DATA SEBELUM
-                  </Typography>
+                  <Typography sx={{ fontSize: "0.75rem", fontWeight: 700, mb: 0.75, color: "var(--muted-foreground)" }}>DATA SEBELUM</Typography>
                   <Paper
                     variant="outlined"
                     sx={{
@@ -823,18 +639,12 @@ export function AuditLogPage() {
                       borderRadius: "var(--radius)",
                     }}
                   >
-                    <pre style={{ margin: 0 }}>
-                      {selectedLog.dataSebelum
-                        ? JSON.stringify(selectedLog.dataSebelum, null, 2)
-                        : "null (Data Baru Dibuat)"}
-                    </pre>
+                    <pre style={{ margin: 0 }}>{selectedLog.dataSebelum ? JSON.stringify(selectedLog.dataSebelum, null, 2) : "null (Data Baru Dibuat)"}</pre>
                   </Paper>
                 </Grid>
 
                 <Grid size={{ xs: 12, md: 6 }}>
-                  <Typography sx={{ fontSize: "0.75rem", fontWeight: 700, mb: 0.75, color: "var(--muted-foreground)" }}>
-                    DATA SESUDAH
-                  </Typography>
+                  <Typography sx={{ fontSize: "0.75rem", fontWeight: 700, mb: 0.75, color: "var(--muted-foreground)" }}>DATA SESUDAH</Typography>
                   <Paper
                     variant="outlined"
                     sx={{
@@ -847,11 +657,7 @@ export function AuditLogPage() {
                       borderRadius: "var(--radius)",
                     }}
                   >
-                    <pre style={{ margin: 0 }}>
-                      {selectedLog.dataSesudah
-                        ? JSON.stringify(selectedLog.dataSesudah, null, 2)
-                        : "null (Data Dihapus)"}
-                    </pre>
+                    <pre style={{ margin: 0 }}>{selectedLog.dataSesudah ? JSON.stringify(selectedLog.dataSesudah, null, 2) : "null (Data Dihapus)"}</pre>
                   </Paper>
                 </Grid>
               </Grid>
@@ -863,75 +669,13 @@ export function AuditLogPage() {
   }, [selectedLog, selectedDiff, statusTransition, activeDiffTab, copiedRecordId, handleCopyRecordId]);
 
   return (
-    <DashboardLayout sectionTitle="Sistem" title="Audit Log & Jejak Aktivitas">
-      <Box sx={{ py: 2.5, px: { xs: 2, sm: 3 } }}>
-        {/* ── Top Header & Subtitle ────────────────────────────────────────── */}
-        <Box sx={{ mb: 3 }}>
-          <Typography sx={{ fontSize: "1.4rem", fontWeight: 800, color: "var(--foreground)" }}>
-            Jejak Audit & Alur Aktivitas
-          </Typography>
-          <Typography sx={{ fontSize: "0.85rem", color: "var(--muted-foreground)", mt: 0.5 }}>
-            Pantau kronologi alur pengadaan, transisi status approval, registrasi vendor, dan histori perubahan sistem LEMIGAS secara interaktif.
-          </Typography>
-        </Box>
-
-        {/* ── KPI Stat Cards with Click-to-Filter ───────────────────────────── */}
-        <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <StatCard
-              label="Total Seluruh Jejak"
-              value={stats.total}
-              icon={<HistoryOutlined />}
-              color="#2563eb"
-              active={actionFilter === "__all" && !selectedRecordId}
-              onClick={() => {
-                setActionFilter("__all");
-                setSelectedRecordId(null);
-                setPage(0);
-              }}
-            />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <StatCard
-              label="Entitas Baru (CREATE)"
-              value={stats.creates}
-              icon={<AddCircleOutline />}
-              color="#16a34a"
-              active={actionFilter === "create"}
-              onClick={() => {
-                setActionFilter(actionFilter === "create" ? "__all" : "create");
-                setPage(0);
-              }}
-            />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <StatCard
-              label="Transisi Alur (UPDATE)"
-              value={stats.updates}
-              icon={<EditNoteOutlined />}
-              color="#f59e0b"
-              active={actionFilter === "update"}
-              onClick={() => {
-                setActionFilter(actionFilter === "update" ? "__all" : "update");
-                setPage(0);
-              }}
-            />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <StatCard
-              label="Penghapusan (DELETE)"
-              value={stats.deletes}
-              icon={<DeleteOutline />}
-              color="#dc2626"
-              active={actionFilter === "delete"}
-              onClick={() => {
-                setActionFilter(actionFilter === "delete" ? "__all" : "delete");
-                setPage(0);
-              }}
-            />
-          </Grid>
-        </Grid>
-
+    <DashboardLayout
+      sectionTitle="Sistem"
+      title="Audit Log & Jejak Aktivitas"
+      headerTitle="Jejak Audit & Alur Aktivitas"
+      headerDescription="Pantau kronologi alur pengadaan, transisi status approval, registrasi vendor, dan histori perubahan sistem LEMIGAS secara interaktif."
+    >
+      <Box sx={{ p: { xs: 2, sm: 3 } }}>
         {/* ── Active Record Filter Banner (Alur Pelacakan Record Tertentu) ─── */}
         <Collapse in={Boolean(selectedRecordId)}>
           <Alert
@@ -956,9 +700,7 @@ export function AuditLogPage() {
                 {selectedRecordId}
               </Box>
             </Typography>
-            <Typography sx={{ fontSize: "0.75rem", color: "var(--muted-foreground)", mt: 0.25 }}>
-              Hanya menampilkan tahapan siklus hidup (lifecycle) yang berhubungan langsung dengan entitas record ini.
-            </Typography>
+            <Typography sx={{ fontSize: "0.75rem", color: "var(--muted-foreground)", mt: 0.25 }}>Hanya menampilkan tahapan siklus hidup (lifecycle) yang berhubungan langsung dengan entitas record ini.</Typography>
           </Alert>
         </Collapse>
 
@@ -977,9 +719,7 @@ export function AuditLogPage() {
         >
           {/* Module Pills */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, overflowX: "auto", pb: 0.5 }}>
-            <Typography sx={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--muted-foreground)", mr: 0.5, flexShrink: 0 }}>
-              Kategori Alur:
-            </Typography>
+            <Typography sx={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--muted-foreground)", mr: 0.5, flexShrink: 0 }}>Kategori Alur:</Typography>
 
             {[
               { id: "__all", label: "Semua Alur", icon: <LayersOutlined sx={{ fontSize: 16 }} /> },
@@ -1172,13 +912,9 @@ export function AuditLogPage() {
             }}
           >
             <HistoryOutlined sx={{ fontSize: 48, color: "var(--muted-foreground)", mb: 1, opacity: 0.5 }} />
-            <Typography sx={{ fontWeight: 700, fontSize: "1rem", color: "var(--foreground)" }}>
-              Tidak ada data jejak aktivitas
-            </Typography>
+            <Typography sx={{ fontWeight: 700, fontSize: "1rem", color: "var(--foreground)" }}>Tidak ada data jejak aktivitas</Typography>
             <Typography sx={{ fontSize: "0.82rem", color: "var(--muted-foreground)", mt: 0.5, mb: 2 }}>
-              {search || actionFilter !== "__all" || moduleFilter !== "__all" || selectedRecordId
-                ? "Tidak ada data yang cocok dengan kriteria filter saat ini."
-                : "Belum ada histori audit log yang tercatat di sistem."}
+              {search || actionFilter !== "__all" || moduleFilter !== "__all" || selectedRecordId ? "Tidak ada data yang cocok dengan kriteria filter saat ini." : "Belum ada histori audit log yang tercatat di sistem."}
             </Typography>
             {(search || actionFilter !== "__all" || moduleFilter !== "__all" || selectedRecordId) && (
               <SoftButton
@@ -1289,18 +1025,10 @@ export function AuditLogPage() {
                       >
                         {/* Actor & Entity Info */}
                         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                          <UserAvatar
-                            name={actor?.nama || "Sistem"}
-                            id={actor?.id}
-                            size="small"
-                            showName={false}
-                            showId={false}
-                          />
+                          <UserAvatar name={actor?.nama || "Sistem"} id={actor?.id} size="small" showName={false} showId={false} />
                           <Box>
                             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                              <Typography sx={{ fontWeight: 700, fontSize: "0.88rem", color: "var(--foreground)" }}>
-                                {actor?.nama || "Sistem Otomatis"}
-                              </Typography>
+                              <Typography sx={{ fontWeight: 700, fontSize: "0.88rem", color: "var(--foreground)" }}>{actor?.nama || "Sistem Otomatis"}</Typography>
                               {actor?.unitKerja && (
                                 <Chip
                                   label={actor.unitKerja}
@@ -1314,9 +1042,7 @@ export function AuditLogPage() {
                                 />
                               )}
                             </Box>
-                            <Typography sx={{ fontSize: "0.72rem", color: "var(--muted-foreground)" }}>
-                              {actor?.email || "internal@lemigas.esdm.go.id"}
-                            </Typography>
+                            <Typography sx={{ fontSize: "0.72rem", color: "var(--muted-foreground)" }}>{actor?.email || "internal@lemigas.esdm.go.id"}</Typography>
                           </Box>
                         </Box>
 
@@ -1368,13 +1094,7 @@ export function AuditLogPage() {
                             label={`#${item.recordId.substring(0, 8)}`}
                             size="small"
                             onClick={(e) => handleCopyRecordId(item.recordId, e)}
-                            icon={
-                              copiedRecordId === item.recordId ? (
-                                <CheckOutlined sx={{ fontSize: "14px !important", color: "#16a34a" }} />
-                              ) : (
-                                <ContentCopyOutlined sx={{ fontSize: "14px !important" }} />
-                              )
-                            }
+                            icon={copiedRecordId === item.recordId ? <CheckOutlined sx={{ fontSize: "14px !important", color: "#16a34a" }} /> : <ContentCopyOutlined sx={{ fontSize: "14px !important" }} />}
                             sx={{
                               fontSize: "0.72rem",
                               fontFamily: "var(--font-mono)",
@@ -1407,9 +1127,7 @@ export function AuditLogPage() {
                             flexWrap: "wrap",
                           }}
                         >
-                          <Typography sx={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--muted-foreground)" }}>
-                            Atribut Diperbarui:
-                          </Typography>
+                          <Typography sx={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--muted-foreground)" }}>Atribut Diperbarui:</Typography>
                           {modifiedKeys.slice(0, 4).map((k) => (
                             <Chip
                               key={k}
@@ -1424,11 +1142,7 @@ export function AuditLogPage() {
                               }}
                             />
                           ))}
-                          {modifiedKeys.length > 4 && (
-                            <Typography sx={{ fontSize: "0.7rem", color: "var(--muted-foreground)" }}>
-                              +{modifiedKeys.length - 4} lainnya
-                            </Typography>
-                          )}
+                          {modifiedKeys.length > 4 && <Typography sx={{ fontSize: "0.7rem", color: "var(--muted-foreground)" }}>+{modifiedKeys.length - 4} lainnya</Typography>}
                         </Box>
                       )}
 
@@ -1463,11 +1177,7 @@ export function AuditLogPage() {
                         )}
 
                         <Box sx={{ ml: "auto", display: "flex", alignItems: "center", gap: 1 }}>
-                          <SoftButton
-                            size="small"
-                            variant="outlined"
-                            onClick={() => handleOpenDetail(item)}
-                          >
+                          <SoftButton size="small" variant="outlined" onClick={() => handleOpenDetail(item)}>
                             Inspeksi Detail & Diff JSON
                           </SoftButton>
                         </Box>
@@ -1491,24 +1201,12 @@ export function AuditLogPage() {
             <Table size="small">
               <TableHead sx={{ backgroundColor: "var(--secondary)" }}>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "15%" }}>
-                    Waktu
-                  </TableCell>
-                  <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "18%" }}>
-                    Pengguna (Aktor)
-                  </TableCell>
-                  <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "14%" }}>
-                    Modul / Tabel
-                  </TableCell>
-                  <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "12%" }}>
-                    Aksi
-                  </TableCell>
-                  <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "24%" }}>
-                    Alur & Perubahan
-                  </TableCell>
-                  <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "17%", textAlign: "right" }}>
-                    Tindakan
-                  </TableCell>
+                  <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "15%" }}>Waktu</TableCell>
+                  <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "18%" }}>Pengguna (Aktor)</TableCell>
+                  <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "14%" }}>Modul / Tabel</TableCell>
+                  <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "12%" }}>Aksi</TableCell>
+                  <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "24%" }}>Alur & Perubahan</TableCell>
+                  <TableCell sx={{ fontWeight: 700, fontSize: "0.75rem", width: "17%", textAlign: "right" }}>Tindakan</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -1528,27 +1226,15 @@ export function AuditLogPage() {
                   return (
                     <TableRow key={row.id} hover sx={{ "&:hover": { backgroundColor: "var(--secondary)" } }}>
                       <TableCell>
-                        <Typography sx={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--foreground)" }}>
-                          {formatTimeAgo(row.createdAt)}
-                        </Typography>
-                        <Typography sx={{ fontSize: "0.7rem", color: "var(--muted-foreground)" }}>
-                          {formatFullDate(row.createdAt)}
-                        </Typography>
+                        <Typography sx={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--foreground)" }}>{formatTimeAgo(row.createdAt)}</Typography>
+                        <Typography sx={{ fontSize: "0.7rem", color: "var(--muted-foreground)" }}>{formatFullDate(row.createdAt)}</Typography>
                       </TableCell>
 
                       <TableCell>
                         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                          <UserAvatar
-                            name={actor?.nama || "Sistem"}
-                            id={actor?.id}
-                            size="small"
-                            showName={false}
-                            showId={false}
-                          />
+                          <UserAvatar name={actor?.nama || "Sistem"} id={actor?.id} size="small" showName={false} showId={false} />
                           <Box sx={{ minWidth: 0 }}>
-                            <Typography sx={{ fontSize: "0.8rem", fontWeight: 700, lineHeight: 1.2 }}>
-                              {actor?.nama || "Sistem"}
-                            </Typography>
+                            <Typography sx={{ fontSize: "0.8rem", fontWeight: 700, lineHeight: 1.2 }}>{actor?.nama || "Sistem"}</Typography>
                             <Typography
                               sx={{
                                 fontSize: "0.7rem",
@@ -1608,11 +1294,7 @@ export function AuditLogPage() {
                               maxWidth: 240,
                             }}
                           >
-                            {row.dataSesudah
-                              ? JSON.stringify(row.dataSesudah).substring(0, 45) + "..."
-                              : row.dataSebelum
-                              ? JSON.stringify(row.dataSebelum).substring(0, 45) + "..."
-                              : "—"}
+                            {row.dataSesudah ? JSON.stringify(row.dataSesudah).substring(0, 45) + "..." : row.dataSebelum ? JSON.stringify(row.dataSebelum).substring(0, 45) + "..." : "—"}
                           </Typography>
                         )}
                       </TableCell>
@@ -1621,11 +1303,7 @@ export function AuditLogPage() {
                         <Box sx={{ display: "inline-flex", alignItems: "center", gap: 0.75 }}>
                           {row.recordId && selectedRecordId !== row.recordId && (
                             <Tooltip title="Telusuri Alur Record Ini">
-                              <IconButton
-                                size="small"
-                                onClick={(e) => handleFilterRecord(row.recordId, e)}
-                                sx={{ color: "#2563eb" }}
-                              >
+                              <IconButton size="small" onClick={(e) => handleFilterRecord(row.recordId, e)} sx={{ color: "#2563eb" }}>
                                 <AltRouteOutlined fontSize="small" />
                               </IconButton>
                             </Tooltip>
@@ -1672,9 +1350,7 @@ export function AuditLogPage() {
 
           <Box sx={{ display: "flex", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-              <Typography sx={{ fontSize: "0.75rem", color: "var(--muted-foreground)", mr: 0.5 }}>
-                Baris:
-              </Typography>
+              <Typography sx={{ fontSize: "0.75rem", color: "var(--muted-foreground)", mr: 0.5 }}>Baris:</Typography>
               {[10, 15, 30, 50].map((r) => (
                 <Button
                   key={r}
@@ -1700,23 +1376,11 @@ export function AuditLogPage() {
             </Box>
 
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <Button
-                size="small"
-                disabled={page === 0 || is_loading}
-                onClick={() => setPage((p) => Math.max(0, p - 1))}
-                sx={{ textTransform: "none", fontSize: "0.78rem", fontWeight: 600 }}
-              >
+              <Button size="small" disabled={page === 0 || is_loading} onClick={() => setPage((p) => Math.max(0, p - 1))} sx={{ textTransform: "none", fontSize: "0.78rem", fontWeight: 600 }}>
                 Sebelumnya
               </Button>
-              <Typography sx={{ fontSize: "0.8rem", fontWeight: 700, px: 0.5 }}>
-                Halaman {page + 1}
-              </Typography>
-              <Button
-                size="small"
-                disabled={(page + 1) * rowsPerPage >= totalRows || is_loading}
-                onClick={() => setPage((p) => p + 1)}
-                sx={{ textTransform: "none", fontSize: "0.78rem", fontWeight: 600 }}
-              >
+              <Typography sx={{ fontSize: "0.8rem", fontWeight: 700, px: 0.5 }}>Halaman {page + 1}</Typography>
+              <Button size="small" disabled={(page + 1) * rowsPerPage >= totalRows || is_loading} onClick={() => setPage((p) => p + 1)} sx={{ textTransform: "none", fontSize: "0.78rem", fontWeight: 600 }}>
                 Selanjutnya
               </Button>
             </Box>
